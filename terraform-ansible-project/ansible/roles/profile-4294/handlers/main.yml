@@ -1,0 +1,5 @@
+---
+# handlers file for profile-4294
+- name: reload profile
+  shell: source /etc/profile
+  become: yes

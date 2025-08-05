@@ -1,0 +1,3 @@
+---
+# vars file for datadisk-4294
+data_disk_device: /dev/sdc

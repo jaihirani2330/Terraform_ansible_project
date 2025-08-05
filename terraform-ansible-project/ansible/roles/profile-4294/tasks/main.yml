@@ -1,0 +1,10 @@
+---
+- name: Update /etc/profile with timeout setting
+  blockinfile:
+    path: /etc/profile
+    block: |
+      #Test block added by Ansible......Jai.Hirani
+      export TMOUT=1500
+    marker: "# {mark} ANSIBLE MANAGED BLOCK - TIMEOUT SETTING"
+    state: present
+  become: yes

@@ -1,0 +1,6 @@
+---
+# vars file for user-4294
+user_accounts:
+  - user100
+  - user200
+  - user300

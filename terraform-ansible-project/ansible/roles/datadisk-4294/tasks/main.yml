@@ -1,0 +1,81 @@
+---
+- name: Install parted
+  package:
+    name: parted
+    state: present
+
+- name: Check if data disk exists
+  stat:
+    path: /dev/sdc
+  register: data_disk
+
+- name: Create partition table on data disk
+  command: parted /dev/sdc mklabel gpt
+  when: data_disk.stat.exists
+  ignore_errors: yes
+
+- name: Create 4GB partition
+  parted:
+    device: /dev/sdc
+    number: 1
+    part_start: 0%
+    part_end: 4GB
+    state: present
+  when: data_disk.stat.exists
+
+- name: Create 5GB partition
+  parted:
+    device: /dev/sdc
+    number: 2
+    part_start: 4GB
+    part_end: 9GB
+    state: present
+  when: data_disk.stat.exists
+
+- name: Wait for partitions to be available
+  wait_for:
+    path: "{{ item }}"
+    timeout: 30
+  loop:
+    - /dev/sdc1
+    - /dev/sdc2
+  when: data_disk.stat.exists
+
+- name: Format first partition with XFS
+  filesystem:
+    fstype: xfs
+    dev: /dev/sdc1
+    force: no
+  when: data_disk.stat.exists
+
+- name: Format second partition with EXT4
+  filesystem:
+    fstype: ext4
+    dev: /dev/sdc2
+    force: no
+  when: data_disk.stat.exists
+
+- name: Create mount points
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: '0755'
+  loop:
+    - /part1
+    - /part2
+
+- name: Mount XFS partition
+  mount:
+    path: /part1
+    src: /dev/sdc1
+    fstype: xfs
+    state: mounted
+  when: data_disk.stat.exists
+
+- name: Mount EXT4 partition
+  mount:
+    path: /part2
+    src: /dev/sdc2
+    fstype: ext4
+    state: mounted
+  when: data_disk.stat.exists

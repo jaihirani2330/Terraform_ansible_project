@@ -1,0 +1,31 @@
+---
+- name: Create cloudadmins group
+  group:
+    name: cloudadmins
+    state: present
+
+- name: Create user accounts
+  user:
+    name: "{{ item }}"
+    groups: 
+      - cloudadmins
+      - sudo
+    shell: /bin/bash
+    create_home: yes
+    generate_ssh_key: yes
+    ssh_key_bits: 2048
+    ssh_key_file: .ssh/id_rsa
+    ssh_key_passphrase: ""
+    state: present
+  loop:
+    - user100
+    - user200
+    - user300
+
+- name: Download user100 private key
+  fetch:
+    src: /home/user100/.ssh/id_rsa
+    dest: ./user100_private_key
+    flat: yes
+    fail_on_missing: yes
+  when: inventory_hostname == groups['webservers'][0]

@@ -1,0 +1,6 @@
+---
+# handlers file for datadisk-4294
+- name: reload systemd
+  systemd:
+    daemon_reload: yes
+  become: yes

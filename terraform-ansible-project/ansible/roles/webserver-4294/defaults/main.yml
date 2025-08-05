@@ -1,0 +1,5 @@
+---
+# defaults file for webserver-4294
+web_server_package: apache2
+web_server_service: apache2
+document_root: /var/www/html

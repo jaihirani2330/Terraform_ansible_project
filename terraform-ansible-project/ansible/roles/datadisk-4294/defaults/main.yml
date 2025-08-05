@@ -1,0 +1,7 @@
+---
+# defaults file for datadisk-4294
+data_disk_device: /dev/sdc
+partition_1_size: 4GB
+partition_2_size: 5GB
+mount_point_1: /part1
+mount_point_2: /part2

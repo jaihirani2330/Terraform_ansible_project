@@ -1,0 +1,10 @@
+galaxy_info:
+  author: Jai Hirani
+  description: Web server configuration for automation project
+  company: Humber College
+  min_ansible_version: 2.9
+  platforms:
+  - name: Ubuntu
+    versions:
+    - focal
+dependencies: []

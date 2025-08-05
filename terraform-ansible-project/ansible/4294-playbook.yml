@@ -1,0 +1,15 @@
+---
+- name: Configure Linux VMs for Automation Project
+  hosts: webservers
+  become: yes
+  gather_facts: yes
+  
+  vars:
+    humber_id: "4294"
+    student_name: "Jai.Hirani"
+  
+  roles:
+    - profile-4294
+    - user-4294
+    - datadisk-4294
+    - webserver-4294

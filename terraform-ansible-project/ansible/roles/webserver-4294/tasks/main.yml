@@ -1,0 +1,20 @@
+---
+- name: Install Apache web server
+  package:
+    name: apache2
+    state: present
+  notify: start apache2
+
+- name: Create HTML content on web servers
+  copy:
+    content: "{{ inventory_hostname }}"
+    dest: /var/www/html/index.html
+    mode: '0644'
+    owner: root
+    group: root
+
+- name: Enable Apache service
+  systemd:
+    name: apache2
+    enabled: yes
+    state: started
