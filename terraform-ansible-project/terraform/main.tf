@@ -152,7 +152,7 @@ resource "azurerm_network_security_rule" "https" {
   network_security_group_name = module.networking.network_security_group_name
 }
 
-# Project documentation file (Resource #48)
+# Project documentation file 
 resource "local_file" "project_info" {
   content = <<-EOF
     Terraform + Ansible Automation Project
